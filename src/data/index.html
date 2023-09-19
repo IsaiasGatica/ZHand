@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="bootstrap.min.css" rel="stylesheet" media="all" />
+  </head>
+  <body>
+    <nav class="navbar bg-body-tertiary navbar-expand-mdv">
+      <div class="container-fluid">
+        <span class="navbar-brand">Z Hand</span>
+      </div>
+    </nav>
+    <br />
+    <br />
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <div class="card text-bg-dark mb-3 mx-auto" style="max-width: 15rem">
+            <div class="card-header">Dedo Indice</div>
+            <div class="card-body text-center">
+              <input
+                type="range"
+                onchange="updateSliderPWM(this)"
+                id="sliderValue1"
+                min="25"
+                max="150"
+                step="5"
+                value="0"
+                class="slider"
+              />
+            </div>
+            <!-- <div class="card-footer bg-transparent d-flex align-items-center">
+              <p class="state">Posición: <span id="sliderValue1"></span>&deg</p>
+            </div> -->
+          </div>
+          <div
+            class="input-group input-group mb-3 mx-auto"
+            style="max-width: 15rem"
+          >
+            <span class="input-group-text" id="inputGroup-sizing-sm"
+              >Posición</span
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="positionInput"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm"
+              oninput="updateSliderFromInput(this)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+  </body>
+  <style>
+    .slider:focus {
+      outline: none;
+    }
+    .card-body {
+      padding-bottom: 10px; /* Puedes ajustar este valor según tus necesidades */
+    }
+    .card-footer {
+      padding-bottom: 1px; /* Puedes ajustar este valor según tus necesidades */
+    }
+    .card-footer {
+      padding-top: 10px; /* Puedes ajustar este valor según tus necesidades */
+    }
+  </style>
+</html>
