@@ -13,7 +13,7 @@
 
 int16_t adc0;
 Servo myservo;
-movingAvg avgTemp(10);
+movingAvg avgTemp(30);
 Adafruit_ADS1115 ads;
 
 void setup()
@@ -22,7 +22,7 @@ void setup()
   initFS();
   initWiFi();
 
-  myservo.attach(12);
+  myservo.attach(16);
   avgTemp.begin();
 
   initWebSocket();
@@ -42,16 +42,22 @@ void setup()
 void loop()
 {
 
-  myservo.write(SPosicion);
+  // myservo.write(SPosicion);
 
   ws.cleanupClients();
 
   adc0 = ads.readADC_SingleEnded(0);
   int avg = avgTemp.reading(adc0);
+  int sensorvalue = map(avg, 0, 3000, 30, 180);
+
+  myservo.write(sensorvalue);
   Serial.print(">AD0:");
   Serial.println(adc0);
   Serial.println(" ");
   Serial.print(">Avg:");
   Serial.println(avg);
+  Serial.println(" ");
+  Serial.print(">map:");
+  Serial.println(sensorvalue);
   Serial.println(" ");
 }
