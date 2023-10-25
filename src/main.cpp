@@ -11,6 +11,8 @@
 #include <Adafruit_ADS1X15.h>
 #include <movingAvg.h>
 
+#define EMGRecord
+
 uint16_t adc0;
 Servo myservo;
 movingAvg avgTemp(30);
@@ -42,23 +44,29 @@ void setup()
 void loop()
 {
 
-  // myservo.write(SPosicion);
-
   ws.cleanupClients();
 
   adc0 = ads.readADC_SingleEnded(0);
-  Serial.write((uint8_t *)&adc0, sizeof(adc0)); // Envía los datos en formato binario
-  int avg = avgTemp.reading(adc0);
-  int sensorvalue = map(avg, 0, 3000, 30, 180);
+  uint16_t avg = avgTemp.reading(adc0);
+  uint16_t sensorvalue = map(avg, 0, 3000, 30, 180);
 
-  //   myservo.write(sensorvalue);
-  //   Serial.print(">AD0:");
-  //   Serial.println(adc0);
-  //   Serial.println(" ");
-  //   Serial.print(">Avg:");
-  //   Serial.println(avg);
-  //   Serial.println(" ");
-  //   Serial.print(">map:");
-  //   Serial.println(sensorvalue);
-  //   Serial.println(" ");
+#ifdef EMGRecord
+  Serial.write((uint8_t *)&adc0, sizeof(adc0)); // Datos en formato binario
+#else
+  Serial.print(">AD0:");
+  Serial.println(adc0);
+  Serial.println(" ");
+  Serial.print(">Avg:");
+  Serial.println(avg);
+  Serial.println(" ");
+  Serial.print(">map:");
+  Serial.println(sensorvalue);
+  Serial.println(" ");
+#endif
+
+#ifdef EMGServo
+  myservo.write(sensorvalue);
+#else
+  myservo.write(SPosicion);
+#endif
 }
