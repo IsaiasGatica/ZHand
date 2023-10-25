@@ -11,7 +11,7 @@
 #include <Adafruit_ADS1X15.h>
 #include <movingAvg.h>
 
-int16_t adc0;
+uint16_t adc0;
 Servo myservo;
 movingAvg avgTemp(30);
 Adafruit_ADS1115 ads;
@@ -47,17 +47,18 @@ void loop()
   ws.cleanupClients();
 
   adc0 = ads.readADC_SingleEnded(0);
+  Serial.write((uint8_t *)&adc0, sizeof(adc0)); // Envía los datos en formato binario
   int avg = avgTemp.reading(adc0);
   int sensorvalue = map(avg, 0, 3000, 30, 180);
 
-  myservo.write(sensorvalue);
-  Serial.print(">AD0:");
-  Serial.println(adc0);
-  Serial.println(" ");
-  Serial.print(">Avg:");
-  Serial.println(avg);
-  Serial.println(" ");
-  Serial.print(">map:");
-  Serial.println(sensorvalue);
-  Serial.println(" ");
+  //   myservo.write(sensorvalue);
+  //   Serial.print(">AD0:");
+  //   Serial.println(adc0);
+  //   Serial.println(" ");
+  //   Serial.print(">Avg:");
+  //   Serial.println(avg);
+  //   Serial.println(" ");
+  //   Serial.print(">map:");
+  //   Serial.println(sensorvalue);
+  //   Serial.println(" ");
 }
